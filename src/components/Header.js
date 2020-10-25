@@ -3,24 +3,38 @@ import styled from 'styled-components';
 
 
 const HeaderWrapper = styled.div`
-    background-color: #ddd;
+    display: flex;
+    background-color: #ccc;
     width: 100%;
     height: 60px;
     margin-bottom: 20px;
+    justify-content: space-between;
+    box-sizing: border-box;
 `
 
 const Logo = styled.div`
+    display: flex;
+    align-items: center;
     height: 100%; 
-    float: left; 
     width: 40%; 
-    background-color: red;
+    margin-left: 20px;
+
+    @media(min-width: 380px) {
+        margin-left: 10%;
+    }
 `
 
 const LoginArea = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     height: 100%; 
-    float: right; 
     width: 50%; 
-    background-color: green;
+    margin-right: 20px;    
+
+    @media(min-width: 380px) {
+        margin-right: 10%;
+    }
 `
 
 const Header = () => {
