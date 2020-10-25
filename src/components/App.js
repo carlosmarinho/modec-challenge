@@ -15,6 +15,11 @@ const GlobalStyle = createGlobalStyle`
             font-size: 16px;
         }
     }
+
+    .leaflet-container {
+    width: 100%;
+    height: 100%;
+    }
 `
 
 const App = () => {
