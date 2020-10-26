@@ -26,7 +26,6 @@ const App = () => {
     return (
         <>
         <GlobalStyle />
-            <Header />
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/" component={Home} />
