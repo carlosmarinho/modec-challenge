@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom'
 import styled from 'styled-components';
 import Map from 'components/Map'
@@ -9,10 +9,21 @@ const MapArea = styled.div`
 `
 
 const Home = () => {
+    const [position, setPosition] = useState();
+    
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            function(pos) {
+                setPosition(pos);
+            }
+        );
+    }, []) 
+
+    console.log("position: ", position ? position.coords : '' );
 
     return (
             <MapArea>
-                <Map />
+                <Map coords={position ? position.coords : null} />
             </MapArea>
     )
 };
