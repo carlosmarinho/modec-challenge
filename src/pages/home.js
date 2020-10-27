@@ -43,8 +43,8 @@ const Home = () => {
     const posInitial = [-22.88, -43.12]
     const [cities, setCities] = useState([]);
     const [initialCity, setInitialCity] = useState(null);
-    const [position, setPosition] = useState(posInitial);
-    const [marker, setMarker] = useState({coords: {latitude: posInitial[0], longitude: posInitial[0]}});
+    const [position, setPosition] = useState({coords: {latitude: posInitial[0], longitude: posInitial[1]}});
+    const [marker, setMarker] = useState(null);
 
     const handleCreateNewPin = (e) => {
         setMarker(null);
@@ -67,6 +67,7 @@ const Home = () => {
             async (error) => {
 
                 console.log("error: ", error);
+                setInitialCity(false)
             }
         );
         
@@ -91,12 +92,9 @@ const Home = () => {
     }
 
 
-    console.log("marker: ", marker);
-    if(! marker)
-        return <div>Carregando ...</div>
-
+    
     return (
-        <PageLayout city={initialCity ? initialCity : null}>
+        <PageLayout city={initialCity}>
             <SearchBar 
                 searchByCity={searchByCity}
             />

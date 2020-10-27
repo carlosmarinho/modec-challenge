@@ -41,11 +41,29 @@ const TempArea = styled.div`
     font-size: 1.1rem;
     color: #fff;
 
+    a{
+        font-size: 0.8rem;
+        color: #fff;
+    }
+
     @media(min-width: 400px) {
         margin-right: 10%;
         font-size: 1.3rem;
     }
-`
+`;
+
+
+const renderCity = (city) => {
+    if(city === false) {
+        return <a href="https://support.google.com/chrome/answer/142065?hl=en" target="_blank">Allow your location to display your local temperature here</a>
+    }
+    else if(city === null){
+        return '...';
+    }
+    else {
+        return `${city.name}, ${parseInt(city.main.temp)}º c `; 
+    }
+}
 
 const Header = ({city}) => {
     console.log("city no header: ", city);
@@ -61,7 +79,7 @@ const Header = ({city}) => {
                     city &&
                     <img src={`http://openweathermap.org/img/wn/${city.weather[0].icon}.png`} alt=""/>
                 }
-                {city ? `${city.name}, ${parseInt(city.main.temp)}º c ` : '...'}
+                {renderCity(city)}
             </TempArea>
         </HeaderWrapper>
     )
