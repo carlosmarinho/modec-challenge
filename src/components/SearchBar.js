@@ -26,10 +26,15 @@ const Search = styled.div`
 
 `
 
-export const SearchBar = () => {
+export const SearchBar = (props) => {
 
-    const handleSearch = (e) => {
-        console.log("e: ", e);
+    const handleSearch = (event) => {
+        const { target: { value } } = event
+        
+        console.log("eeee: ", event)
+
+        if(event.key === 'Enter')
+             props.searchByCity(value)
     }
 
     return(
@@ -37,8 +42,8 @@ export const SearchBar = () => {
             <img src="/images/search-icon.png" alt="Ícone de busca" />
             <InputSearch 
                 name="search"
-                placeholder="Search for your City"
-                onKeyUp={e => handleSearch(e.target.value)}
+                placeholder="Search your City (press Enter)"
+                onKeyPress={e => handleSearch(e)}
             />
         </Search>
     )

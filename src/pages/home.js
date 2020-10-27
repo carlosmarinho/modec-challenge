@@ -50,7 +50,7 @@ const Home = () => {
     
     useEffect(async() => {
         navigator.geolocation.getCurrentPosition(
-            async function(pos) {
+            async (pos) => {
                 console.log("setou a posição", pos)
                 setPosition(pos);
                 setMarker(pos);
@@ -71,6 +71,9 @@ const Home = () => {
                 const weather = await api.get(`find?lat=${latitude}&lon=${longitude}&cnt=15&APPID=${key}&units=metric`)
                 setCities(weather.data.list);
                 setInitialCity(weather.data.list[0]);
+            },
+            async (error) => {
+                // console.log("")
             }
         );
         
@@ -84,10 +87,22 @@ const Home = () => {
         setCities(weather.data.list);
     }
 
+    const searchByCity = async(searchValue) => {
+        const weather = await api.get(`weather?q=${searchValue}&APPID=${key}&units=metric`)
+        console.log("weatter no search: ", weather)
+        if(weather.data){
+            setMarker({coords: {latitude: weather.data.coord.lat, longitude: weather.data.coord.lon}})
+            setCities([weather.data])
+            setPosition({coords: {latitude: weather.data.coord.lat, longitude: weather.data.coord.lon}});
+        }
+    }
+
     // console.log("cities: ", cities);
     return (
         <PageLayout city={initialCity ? initialCity : null}>
-            <SearchBar />
+            <SearchBar 
+                searchByCity={searchByCity}
+            />
             <MapArea>
                 <Map 
                     coords={position ? position.coords : null} 
