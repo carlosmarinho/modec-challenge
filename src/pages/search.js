@@ -35,16 +35,25 @@ const City = styled.div`
         border-bottom: 2px solid #fff;
     }
 
+    @media(min-width: 700px){
+        margin-left: 0px;
+    }
+
 `
 
 const ImgBox = styled.div`
     display: flex;
     align-items: center;
-    width: 45%;
+    justify-content: center;
+    width: 100%;
     
     span {
         font-weight: bolder;
         font-size: 3rem;
+    }
+
+    @media(min-width: 700px ) {
+        width: 45%;
     }
 
 `
@@ -52,8 +61,9 @@ const ImgBox = styled.div`
 const DescBox = styled.div`
     display: flex;
     flex-direction: column;
-    width: 50%;
-    padding-left: 5%;
+    width: 100%;
+    margin: 0px 10px;
+    
 
     p{
         width: 100%;
@@ -64,6 +74,12 @@ const DescBox = styled.div`
 
     span {
         margin: 0 10px;
+    }
+
+    @media(min-width: 700px ) {
+        width: 50%;
+        padding-left: 5%;
+        margin: initial;
     }
 
 `
