@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-import Header from 'components/Header';
 import Home from 'pages/home';
 import SearchResults from 'pages/search';
 
@@ -30,7 +29,6 @@ const GlobalStyle = createGlobalStyle`
     	cursor: move;
     }
 
-}
 `
 
 const App = () => {

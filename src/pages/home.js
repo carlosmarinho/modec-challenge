@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Map from 'components/Map';
 import api from 'api/';
 import PageLayout from 'components/PageLayout';
+import { SearchBar } from 'components/SearchBar';
 
 const MapArea = styled.div`
     display: flex;
@@ -11,10 +12,11 @@ const MapArea = styled.div`
     flex-direction: column;
     margin: 0 5% 0 5%;
     width: 90%;
-    height: 300px;
+    min-width: 200px;
+    height: 350px;
 
-    @media(min-width: 380px) {
-        height: 500px;
+    @media(min-width: 700px) {
+        height: 480px;
     }
 `
 const key = 'e331364a57997b3e26f001eef954114a';
@@ -85,6 +87,7 @@ const Home = () => {
     // console.log("cities: ", cities);
     return (
         <PageLayout city={initialCity ? initialCity : null}>
+            <SearchBar />
             <MapArea>
                 <Map 
                     coords={position ? position.coords : null} 
