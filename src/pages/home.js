@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Map from 'components/Map';
 import api from 'api/';
 import PageLayout from 'components/PageLayout';
@@ -93,7 +94,9 @@ const Home = () => {
                     >
                         Create new Pin
                     </button>
-                    <button>Search</button>
+                    <Link to={marker ? `/search/${marker.coords.latitude}/${marker.coords.longitude}` : '#'}>
+                        <button >Search</button>
+                    </Link>
                 </SearchArea>
                 {/* <ListingCities>
                     {

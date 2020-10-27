@@ -52,11 +52,11 @@ const Header = ({city}) => {
         <HeaderWrapper>
             <Logo><img src="/images/mywether.png" alt="Logo My Weather"/></Logo>
             <TempArea>
-                {city ? `${city.name} - ${city.main.temp}º ` : '...'}
                 {
                     city &&
                     <img src={`http://openweathermap.org/img/wn/${city.weather[0].icon}.png`} alt=""/>
                 }
+                {city ? `${city.name}, ${city.main.temp}º ` : '...'}
             </TempArea>
         </HeaderWrapper>
     )
