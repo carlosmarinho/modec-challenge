@@ -18,6 +18,7 @@ const Logo = styled.div`
     height: 100%; 
     width: 40%; 
     margin: 5px 0 0 20px;
+    min-width: 140px;
 
     img{
         height: 50px;

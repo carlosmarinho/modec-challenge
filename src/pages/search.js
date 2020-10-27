@@ -10,6 +10,22 @@ const key = 'e331364a57997b3e26f001eef954114a';
 const TitlePage = styled.h2`
     text-align: center;
     margin-top: 50px;
+    display: none;
+
+    @media(min-width: 700px) {
+        display: block;
+    }
+`
+
+const TitlePageMobile = styled.h2`
+    text-align: center;
+    margin-top: 50px;
+    display: block;
+    font-size: 1.3rem;
+
+    @media(min-width: 700px) {
+        display: none;
+    }
 `
 
 const CityWrapper = styled.div`
@@ -23,6 +39,7 @@ const CityWrapper = styled.div`
 const City = styled.div`
     display: flex;
     width: 98%;
+    min-width: 200px;
     /* flex-direction: column; */
     box-sizing: border-box;
     background-color: #314344;
@@ -46,6 +63,7 @@ const ImgBox = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+    min-width: 200px;
     
     span {
         font-weight: bolder;
@@ -63,7 +81,7 @@ const DescBox = styled.div`
     flex-direction: column;
     width: 100%;
     margin: 0px 10px;
-    
+    min-width: 200px;
 
     p{
         width: 100%;
@@ -139,7 +157,8 @@ const Search = () => {
 
     return (
         <PageLayout city={initialCity ? initialCity : null}>
-            <TitlePage>Cities at Latitude {parseFloat(latitude).toFixed(4)} and Longitude {parseFloat(longitude).toFixed(4)} </TitlePage>
+            <TitlePage>Cities at Latitude {parseFloat(latitude).toFixed(3)} and Longitude {parseFloat(longitude).toFixed(3)} </TitlePage>
+            <TitlePageMobile>Cities at  {parseFloat(latitude).toFixed(1)} lat / {parseFloat(longitude).toFixed(1)} long </TitlePageMobile>
             <hr />
             <CityWrapper>
                 {renderCities(cities)}                
