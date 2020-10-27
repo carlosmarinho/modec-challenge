@@ -38,6 +38,7 @@ const ListingCities = styled.div`
 const Home = () => {
     const posInitial = [-22.88, -43.12]
     const [cities, setCities] = useState();
+    const [initialCity, setInitialCity] = useState();
     const [position, setPosition] = useState();
     const [marker, setMarker] = useState();
 
@@ -67,20 +68,23 @@ const Home = () => {
 
                 const weather = await api.get(`find?lat=${latitude}&lon=${longitude}&cnt=15&APPID=${key}&units=metric`)
                 setCities(weather.data.list);
+                setInitialCity(weather.data.list[0]);
             }
         );
         
         
     }, []) 
 
-    const observeMapClick = (coords) => {
+    const observeMapClick = async (coords) => {
         // console.log("corrrd: ", coords.lat)
         setMarker({coords: {latitude: coords.lat, longitude: coords.lng}})
+        const weather = await api.get(`find?lat=${coords.lat}&lon=${coords.lng}&cnt=15&APPID=${key}&units=metric`)
+        setCities(weather.data.list);
     }
 
     // console.log("cities: ", cities);
     return (
-        <PageLayout city={cities ? cities[0] : null}>
+        <PageLayout city={initialCity ? initialCity : null}>
             <MapArea>
                 <Map 
                     coords={position ? position.coords : null} 

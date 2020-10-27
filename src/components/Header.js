@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
     display: flex;
@@ -50,13 +50,17 @@ const Header = ({city}) => {
     console.log("city no header: ", city);
     return (
         <HeaderWrapper>
-            <Logo><img src="/images/mywether.png" alt="Logo My Weather"/></Logo>
+            <Logo>
+                <Link to="/">
+                    <img src="/images/mywether.png" alt="Logo My Weather"/>
+                </Link>
+            </Logo>
             <TempArea>
                 {
                     city &&
                     <img src={`http://openweathermap.org/img/wn/${city.weather[0].icon}.png`} alt=""/>
                 }
-                {city ? `${city.name}, ${city.main.temp}º ` : '...'}
+                {city ? `${city.name}, ${parseInt(city.main.temp)}º c ` : '...'}
             </TempArea>
         </HeaderWrapper>
     )

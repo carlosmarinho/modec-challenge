@@ -40,7 +40,7 @@ const App = () => {
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route path="/search" component={SearchResults} />
+                    <Route exact path="/search/:latitude/:longitude" component={SearchResults} />
                 </Switch>
             </BrowserRouter>
         </>
