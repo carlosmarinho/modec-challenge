@@ -17,9 +17,20 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .leaflet-container {
-    width: 100%;
-    height: 100%;
+        width: 100%;
+        height: 100%;
+     
     }
+
+    .leaflet-container.cross {
+        cursor: crosshair;
+    }
+
+    .leaflet-dragging .leaflet-grab{
+    	cursor: move;
+    }
+
+}
 `
 
 const App = () => {

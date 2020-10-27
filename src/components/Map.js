@@ -47,6 +47,7 @@ const MapWrapper = (props) => {
                 center={position} 
                 zoom={13}
                 onClick={e => handleClick(e)}
+                className={marker ? '' : 'cross'}
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
