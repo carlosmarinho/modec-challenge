@@ -38,11 +38,13 @@ const ListingCities = styled.div`
 `
 
 const Home = () => {
+    const state = useState();
+    console.log("useState: ", state);
     const posInitial = [-22.88, -43.12]
-    const [cities, setCities] = useState();
-    const [initialCity, setInitialCity] = useState();
-    const [position, setPosition] = useState();
-    const [marker, setMarker] = useState();
+    const [cities, setCities] = useState([]);
+    const [initialCity, setInitialCity] = useState(null);
+    const [position, setPosition] = useState(posInitial);
+    const [marker, setMarker] = useState({coords: {latitude: posInitial[0], longitude: posInitial[0]}});
 
     const handleCreateNewPin = (e) => {
         setMarker(null);
@@ -54,26 +56,17 @@ const Home = () => {
                 console.log("setou a posição", pos)
                 setPosition(pos);
                 setMarker(pos);
-        
-                let latitude = '';
-                let longitude = '';
-        
-
-                if(pos) {
-                    latitude = pos.coords.latitude;
-                    longitude = pos.coords.longitude;
-                }
-                else{
-                    latitude = posInitial[0];
-                    longitude = posInitial[1];
-                }
+       
+                const latitude = pos.coords.latitude;
+                const longitude = pos.coords.longitude;
 
                 const weather = await api.get(`find?lat=${latitude}&lon=${longitude}&cnt=15&APPID=${key}&units=metric`)
                 setCities(weather.data.list);
                 setInitialCity(weather.data.list[0]);
             },
             async (error) => {
-                // console.log("")
+
+                console.log("error: ", error);
             }
         );
         
@@ -97,7 +90,11 @@ const Home = () => {
         }
     }
 
-    // console.log("cities: ", cities);
+
+    console.log("marker: ", marker);
+    if(! marker)
+        return <div>Carregando ...</div>
+
     return (
         <PageLayout city={initialCity ? initialCity : null}>
             <SearchBar 
