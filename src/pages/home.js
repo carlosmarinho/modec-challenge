@@ -17,7 +17,7 @@ const Wrapper = styled.div`
     display: flex;
     box-sizing: border-box;
     /* flex-direction: column; */
-    margin: 0 5% 0 5%;
+    margin: 0 4% 0 4%;
     width: 92%;
     min-width: 200px;
     height: ${p => p.cities.length ? '800px' : '900px'};
@@ -68,16 +68,29 @@ const ListingCities = styled.div`
         color: black;
     }
 
+    span:hover{
+        cursor: pointer;
+    }
+
+    span img{
+        width: 10px;
+    }
+
     h2 {
         font-size: 1.4rem;
     }
     
+    div {
+        margin-top: 20px;
+        text-align: left;
+    }
+        
     
     @media(min-width: 800px) {
         font-size: 0.8rem;
-        width: 21%;
+        width: 22%;
         margin-top: 0;
-        margin-left: 5%;
+        margin-left: 4%;
         height: 100%;
         
         h2 {
@@ -87,9 +100,14 @@ const ListingCities = styled.div`
         ul{
             padding: 5px 0 0 20px;
         }
+
+        div {
+            margin-top: 20px;
+            text-align: center;
+        }   
+        
     }
 
-    }
 `
 
 
@@ -125,7 +143,8 @@ const Home = () => {
     }, [dispatch]) 
 
     const observeMapClick = async (coords) => {
-        dispatch(fetchCitiesByLatLong( coords.lat, coords.lng, false))
+        console.log("cooooords: ", coords);
+        dispatch(fetchCitiesByLatLong( coords.lat, coords.lng ? coords.lng : coords.lon, false))
     }
 
     const searchByCity = async(searchValue) => {
@@ -156,17 +175,28 @@ const Home = () => {
                         </Link>
                 </SearchArea>
                 </MapArea>
-                {console.log("flaaaa: ", cities)}
                 <ListingCities cities={cities}>
                     <h2>Cities Nearby</h2>
                     <ul>
                         {
                             cities && 
                             cities.map(city => {
-                                return <li><Link to={`search/${city.name}`}>{city.name}</Link> (Pin it)</li>
+                                return (
+                                    <li>
+                                        <Link to={`search/${city.name}`}>{city.name}</Link> 
+                                        &nbsp;
+                                        (<span onClick={() => observeMapClick(city.coord)}>Pin it <img src="/images/pin.png" alt=""/></span>)
+                                        
+                                    </li>
+                                )
                             })
                         }
                     </ul>
+                    <div>
+                        <Link to={marker ? `/search/${marker.coords.latitude}/${marker.coords.longitude}` : '#'}>
+                            <button>Search All</button>
+                        </Link>
+                    </div>
                 </ListingCities>
             
             </Wrapper>
