@@ -17,8 +17,8 @@ const Wrapper = styled.div`
     display: flex;
     box-sizing: border-box;
     /* flex-direction: column; */
-    margin: 0 4% 0 4%;
-    width: 92%;
+    margin: ${p => p.cities.length ? '0 1.5% 0 1.5%' : '0 4% 0 4%'};
+    width: ${p => p.cities.length ? '97%' : '92%'};
     min-width: 200px;
     height: ${p => p.cities.length ? '800px' : '900px'};
     flex-wrap: wrap;
