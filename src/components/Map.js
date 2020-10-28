@@ -31,8 +31,6 @@ const MapWrapper = (props) => {
 
 
     const handleClick = event => {
-        const { lat, lng } = event.latlng
-        // console.log(`Clicked at ${lat}, ${lng}`, event);
         props.observable(event.latlng);
     }
 

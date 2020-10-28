@@ -31,8 +31,6 @@ export const SearchBar = (props) => {
     const handleSearch = (event) => {
         const { target: { value } } = event
         
-        console.log("eeee: ", event)
-
         if(event.key === 'Enter')
              props.searchByCity(value)
     }

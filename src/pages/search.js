@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import api from 'api/';
 
+import { fetchCitiesByLatLong, fetchInitialCity } from 'actions';
 import PageLayout from 'components/PageLayout';
-
-const key = 'e331364a57997b3e26f001eef954114a';
 
 const TitlePage = styled.h2`
     text-align: center;
@@ -32,15 +31,12 @@ const CityWrapper = styled.div`
     width: 100%;
     margin-top: 40px;
     color: #fff;
-
-    
 `
 
 const City = styled.div`
     display: flex;
     width: 98%;
     min-width: 200px;
-    /* flex-direction: column; */
     box-sizing: border-box;
     background-color: #314344;
     margin: 10px 10px 20px 10px; 
@@ -99,14 +95,12 @@ const DescBox = styled.div`
         padding-left: 5%;
         margin: initial;
     }
-
 `
 
 const renderCities = (cities) => {
     if(!cities)
         return <div>Carregando...</div>
 
-    console.log("cities::: ", cities);
     return(
         <>
             {
@@ -133,9 +127,14 @@ const renderCities = (cities) => {
 }
 
 const Search = () => {
-    const [initialCity, setInitialCity] = useState();
-    const [cities, setCities] = useState();
+
     const { latitude, longitude } = useParams();
+    const dispatch = useDispatch();
+    const {
+        cities, 
+        initialCity, 
+    } = useSelector(state => state.weatherReducer);
+
     
     useEffect(async() => {
         navigator.geolocation.getCurrentPosition(
@@ -143,14 +142,10 @@ const Search = () => {
                 const iLatitude = pos.coords.latitude;
                 const iLongitude = pos.coords.longitude;
 
-                const iWeather = await api.get(`find?lat=${iLatitude}&lon=${iLongitude}&cnt=15&APPID=${key}&units=metric`)
-                setInitialCity(iWeather.data.list[0]);
+                dispatch(fetchInitialCity(iLatitude, iLongitude));
             }
         );
-
-        const weather = await api.get(`find?lat=${latitude}&lon=${longitude}&cnt=15&APPID=${key}&units=metric`)
-        setCities(weather.data.list)
-        
+        dispatch(fetchCitiesByLatLong(latitude, longitude, false))        
     }, [])
 
     return (

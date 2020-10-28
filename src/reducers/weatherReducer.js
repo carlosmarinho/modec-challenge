@@ -2,7 +2,8 @@ import {
     FETCH_CITIES_BY_LAT_LNG, 
     SET_INITIAL_CITY, 
     SET_MARKER,
-    FETCH_CITY_BY_NAME
+    FETCH_CITY_BY_NAME,
+    FETCH_INITIAL_CITY
 } from 'actions/types'
 
 const initialState = {
@@ -33,13 +34,17 @@ export default (state=initialState, action) => {
                 marker: { coords: { latitude: coord.lat, longitude: coord.lon }},
                 position: { coords: { latitude: coord.lat, longitude: coord.lon }}
             }
+        case FETCH_INITIAL_CITY:
+            return {
+                ...state,
+                initialCity: action.payload,
+            }
         case SET_INITIAL_CITY:
             return {
                 ...state,
                 initialCity: action.payload,
             }
         case SET_MARKER:
-            console.log("MARKERsss: ", action.payload)
             return {
                 ...state,
                 marker: action.payload,
