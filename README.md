@@ -17,8 +17,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
  - Redux Thunk
  - CSS in JS (Styled Components)
  - react-leaflet
+ - mobile-first solution
 
-# Branchs
+# About the application
+
+The application is designed to help users find their local temperature, it's designed with React and Redux and its a responsive application
 
 I started developing the application without redux and redux-thunk, using Hooks and useState() to save the information local component. The reason is because it's a small application and it was not necessary to use Redux, however i decided to use redux to demonstrate my knowloadge with this over used framework on the react community. If you want to take a look at the application and code without redux, please run the following code:
 
