@@ -14,7 +14,7 @@ const initialState = {
     marker: null,
 }
 
-export default (state=initialState, action) => {
+const WeatherReducer = (state=initialState, action) => {
     let coord = {}
     switch(action.type) {
         case FETCH_CITIES_BY_LAT_LNG:
@@ -55,3 +55,5 @@ export default (state=initialState, action) => {
             return state;
     }
 }
+
+export default WeatherReducer;

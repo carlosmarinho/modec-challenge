@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -52,19 +52,21 @@ const Home = () => {
         dispatch(setMarker(null))
     }
     
-    useEffect(async() => {
-        navigator.geolocation.getCurrentPosition(
-            async (pos) => {
-                const { latitude, longitude } = pos.coords;                
-                dispatch(fetchCitiesByLatLong(latitude, longitude, true))
-            },
-            async (error) => {
-                dispatch(setInitialCity(false));
-            }
-        );
-        
-        
-    }, []) 
+    useEffect(() => {
+        async function getLocation() {
+            navigator.geolocation.getCurrentPosition(
+                async (pos) => {
+                    const { latitude, longitude } = pos.coords;                
+                    dispatch(fetchCitiesByLatLong(latitude, longitude, true))
+                },
+                async (error) => {
+                    dispatch(setInitialCity(false));
+                }
+            );
+        }
+
+        getLocation();
+    }, [dispatch]) 
 
     const observeMapClick = async (coords) => {
         dispatch(fetchCitiesByLatLong( coords.lat, coords.lng, false))

@@ -136,20 +136,24 @@ const Search = () => {
     } = useSelector(state => state.weatherReducer);
 
     
-    useEffect(async() => {
-        navigator.geolocation.getCurrentPosition(
-            async function(pos) {
-                const iLatitude = pos.coords.latitude;
-                const iLongitude = pos.coords.longitude;
+    useEffect(() => {
+        async function getLocation() {
+            navigator.geolocation.getCurrentPosition(
+                async function(pos) {
+                    const iLatitude = pos.coords.latitude;
+                    const iLongitude = pos.coords.longitude;
 
-                dispatch(fetchInitialCity(iLatitude, iLongitude, true));
-            },
-            async () => {
-                dispatch(setInitialCity(false));
-            }
-        );
-        dispatch(fetchCitiesByLatLong(latitude, longitude, false))        
-    }, [])
+                    dispatch(fetchInitialCity(iLatitude, iLongitude, true));
+                },
+                async () => {
+                    dispatch(setInitialCity(false));
+                }
+            );
+            dispatch(fetchCitiesByLatLong(latitude, longitude, false))        
+        }
+
+        getLocation();
+    }, [dispatch, latitude, longitude])
 
     return (
         <PageLayout city={initialCity}>

@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import { render } from 'react-dom'
-import styled from 'styled-components';
-// import ReactWeather from 'react-open-weather';
+import React from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 
 const MapWrapper = (props) => {
