@@ -55,7 +55,7 @@ const TempArea = styled.div`
 
 const renderCity = (city) => {
     if(city === false) {
-        return <a href="https://support.google.com/chrome/answer/142065?hl=en" target="_blank">Allow your location to display your local temperature here</a>
+        return <a href="https://support.google.com/chrome/answer/142065?hl=en" target="_blank" rel="noreferrer">Allow your location to display your local temperature here</a>
     }
     else if(city === null){
         return '...';
@@ -66,7 +66,6 @@ const renderCity = (city) => {
 }
 
 const Header = ({city}) => {
-    console.log("city no header: ", city);
     return (
         <HeaderWrapper>
             <Logo>

@@ -14,8 +14,7 @@ const MapWrapper = (props) => {
         position = [coords.latitude, coords.longitude];
     }
 
-
-    if(props.city) {
+    if(props.city && props.city.main) {
         popup = <>
             <h2>
                 <strong>{props.city.name}</strong>
@@ -30,7 +29,6 @@ const MapWrapper = (props) => {
 
     }
 
-    console.log("props.city: ", position)
 
     const handleClick = event => {
         const { lat, lng } = event.latlng

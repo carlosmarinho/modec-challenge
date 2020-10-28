@@ -140,8 +140,6 @@ const Search = () => {
     useEffect(async() => {
         navigator.geolocation.getCurrentPosition(
             async function(pos) {
-                // setPosition(pos);
-        
                 const iLatitude = pos.coords.latitude;
                 const iLongitude = pos.coords.longitude;
 

@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Map from 'components/Map';
 import api from 'api/';
 import PageLayout from 'components/PageLayout';
 import { SearchBar } from 'components/SearchBar';
+import { 
+    fetchCitiesByLatLong, 
+    setInitialCity, 
+    setMarker,
+    fetchCityByName 
+} from 'actions';
 
 const MapArea = styled.div`
     display: flex;
@@ -38,36 +45,28 @@ const ListingCities = styled.div`
 `
 
 const Home = () => {
-    const state = useState();
-    console.log("useState: ", state);
-    const posInitial = [-22.88, -43.12]
-    const [cities, setCities] = useState([]);
-    const [initialCity, setInitialCity] = useState(null);
-    const [position, setPosition] = useState({coords: {latitude: posInitial[0], longitude: posInitial[1]}});
-    const [marker, setMarker] = useState(null);
+    const dispatch = useDispatch();
 
-    const handleCreateNewPin = (e) => {
-        setMarker(null);
+    const {
+        city, 
+        initialCity, 
+        position, 
+        marker
+    } = useSelector(state => state.weatherReducer);
+
+    const handleCreateNewPin = () => {
+        dispatch(setMarker(null))
     }
     
     useEffect(async() => {
         navigator.geolocation.getCurrentPosition(
             async (pos) => {
                 console.log("setou a posição", pos)
-                setPosition(pos);
-                setMarker(pos);
-       
-                const latitude = pos.coords.latitude;
-                const longitude = pos.coords.longitude;
-
-                const weather = await api.get(`find?lat=${latitude}&lon=${longitude}&cnt=15&APPID=${key}&units=metric`)
-                setCities(weather.data.list);
-                setInitialCity(weather.data.list[0]);
+                const { latitude, longitude } = pos.coords;                
+                dispatch(fetchCitiesByLatLong(latitude, longitude, true))
             },
             async (error) => {
-
-                console.log("error: ", error);
-                setInitialCity(false)
+                dispatch(setInitialCity(false));
             }
         );
         
@@ -75,20 +74,19 @@ const Home = () => {
     }, []) 
 
     const observeMapClick = async (coords) => {
-        // console.log("corrrd: ", coords.lat)
-        setMarker({coords: {latitude: coords.lat, longitude: coords.lng}})
-        const weather = await api.get(`find?lat=${coords.lat}&lon=${coords.lng}&cnt=15&APPID=${key}&units=metric`)
-        setCities(weather.data.list);
+        dispatch(fetchCitiesByLatLong( coords.lat, coords.lng, false))
     }
 
     const searchByCity = async(searchValue) => {
-        const weather = await api.get(`weather?q=${searchValue}&APPID=${key}&units=metric`)
-        console.log("weatter no search: ", weather)
-        if(weather.data){
-            setMarker({coords: {latitude: weather.data.coord.lat, longitude: weather.data.coord.lon}})
-            setCities([weather.data])
-            setPosition({coords: {latitude: weather.data.coord.lat, longitude: weather.data.coord.lon}});
-        }
+        dispatch(fetchCityByName(searchValue))
+        // dispatch(fetchCity(searchValue))
+        // const weather = await api.get(`weather?q=${searchValue}&APPID=${key}&units=metric`)
+        // console.log("weatter no search: ", weather)
+        // if(weather.data){
+            // setMarker({coords: {latitude: weather.data.coord.lat, longitude: weather.data.coord.lon}})
+            // setMyCities([weather.data])
+            // setPosition({coords: {latitude: weather.data.coord.lat, longitude: weather.data.coord.lon}});
+        // }
     }
 
 
@@ -102,7 +100,7 @@ const Home = () => {
                 <Map 
                     coords={position ? position.coords : null} 
                     marker={marker ? marker.coords : null}
-                    city={cities ? cities[0] : null}
+                    city={city ? city : null}
                     observable={observeMapClick}
                 />
                 <SearchArea>
@@ -117,8 +115,8 @@ const Home = () => {
                 </SearchArea>
                 {/* <ListingCities>
                     {
-                        cities && 
-                        cities.map(city => {
+                        myCities && 
+                        myCities.map(city => {
                             return <li>{city.name}</li>
                         })
                     }
