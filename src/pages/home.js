@@ -143,7 +143,6 @@ const Home = () => {
     }, [dispatch]) 
 
     const observeMapClick = async (coords) => {
-        console.log("cooooords: ", coords);
         dispatch(fetchCitiesByLatLong( coords.lat, coords.lng ? coords.lng : coords.lon, false))
     }
 

@@ -133,7 +133,7 @@ const Search = () => {
         }
 
         getLocation();
-    }, [dispatch])
+    }, [dispatch, cityName])
 
     return (
         <PageLayout city={initialCity}>
