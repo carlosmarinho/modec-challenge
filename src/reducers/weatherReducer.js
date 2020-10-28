@@ -23,7 +23,9 @@ export default (state=initialState, action) => {
                 ...state, 
                 cities: action.payload.list,
                 city: action.payload.list ? action.payload.list[0] : {},
-                initialCity: action.payload.initialCity && action.payload.list ? action.payload.list[0] : state.initialCity,
+                initialCity: action.payload.initialCity && action.payload.list 
+                    ? action.payload.list[0] 
+                    : state.initialCity,
                 marker: { coords: { latitude: coord.lat, longitude: coord.lon }}
             }
         case FETCH_CITY_BY_NAME:

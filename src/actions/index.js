@@ -39,7 +39,6 @@ export const fetchCityByName = (name) => async dispatch => {
 }
 
 export const setInitialCity = (initial) => async dispatch => {
-
     dispatch({
         type: SET_INITIAL_CITY,
         payload: initial

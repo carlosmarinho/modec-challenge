@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { fetchCitiesByLatLong, fetchInitialCity } from 'actions';
+import { fetchCitiesByLatLong, fetchInitialCity, setInitialCity } from 'actions';
 import PageLayout from 'components/PageLayout';
 
 const TitlePage = styled.h2`
@@ -142,14 +142,17 @@ const Search = () => {
                 const iLatitude = pos.coords.latitude;
                 const iLongitude = pos.coords.longitude;
 
-                dispatch(fetchInitialCity(iLatitude, iLongitude));
+                dispatch(fetchInitialCity(iLatitude, iLongitude, true));
+            },
+            async () => {
+                dispatch(setInitialCity(false));
             }
         );
         dispatch(fetchCitiesByLatLong(latitude, longitude, false))        
     }, [])
 
     return (
-        <PageLayout city={initialCity ? initialCity : null}>
+        <PageLayout city={initialCity}>
             <TitlePage>Cities at Latitude {parseFloat(latitude).toFixed(3)} and Longitude {parseFloat(longitude).toFixed(3)} </TitlePage>
             <TitlePageMobile>Cities at  {parseFloat(latitude).toFixed(1)} lat / {parseFloat(longitude).toFixed(1)} long </TitlePageMobile>
             <hr />
