@@ -13,19 +13,33 @@ import {
     fetchCityByName 
 } from 'actions';
 
-const MapArea = styled.div`
+const Wrapper = styled.div`
     display: flex;
     box-sizing: border-box;
-    flex-direction: column;
+    /* flex-direction: column; */
     margin: 0 5% 0 5%;
-    width: 90%;
+    width: 92%;
     min-width: 200px;
-    height: 350px;
+    height: ${p => p.cities.length ? '800px' : '900px'};
+    flex-wrap: wrap;
 
-    @media(min-width: 700px) {
-        height: 480px;
+    @media(min-width: 800px) {
+        height: 500px;
+    }
+
+    
+`
+
+const MapArea = styled.div`
+    width: 100%;
+    height: 50%;
+
+    @media(min-width: 800px) {
+        width: ${p => p.cities.length ? '70%' : '100%'};
+        height: 100%;
     }
 `
+
 
 const SearchArea = styled.div`
     display: flex;
@@ -38,11 +52,53 @@ const SearchArea = styled.div`
     }
 `
 
+const ListingCities = styled.div`
+    display: ${p => p.cities.length ? 'block' : 'none'};
+    width: 100%;    
+    margin-left: 0%;
+    margin-top: 30px;
+    background-color: #cecece;
+    font-size: 0.9rem;
+    max-height: initial;
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 150px;
+    height: 50%;
+    a {
+        color: black;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+    
+    
+    @media(min-width: 800px) {
+        font-size: 0.8rem;
+        width: 21%;
+        margin-top: 0;
+        margin-left: 5%;
+        height: 100%;
+        
+        h2 {
+            font-size: 1rem;
+        }
+
+        ul{
+            padding: 5px 0 0 20px;
+        }
+    }
+
+    }
+`
+
+
 const Home = () => {
     const dispatch = useDispatch();
 
     const {
         city, 
+        cities,
         initialCity, 
         position, 
         marker
@@ -81,24 +137,39 @@ const Home = () => {
             <SearchBar 
                 searchByCity={searchByCity}
             />
-            <MapArea>
-                <Map 
-                    coords={position ? position.coords : null} 
-                    marker={marker ? marker.coords : null}
-                    city={city ? city : null}
-                    observable={observeMapClick}
-                />
-                <SearchArea>
-                    <button 
-                        onClick={e => handleCreateNewPin()}
-                    >
-                        Create new Pin
-                    </button>
-                    <Link to={marker ? `/search/${marker.coords.latitude}/${marker.coords.longitude}` : '#'}>
-                        <button >Search</button>
-                    </Link>
+            <Wrapper cities={cities}>
+                <MapArea cities={cities}>
+                    <Map 
+                        coords={position ? position.coords : null} 
+                        marker={marker ? marker.coords : null}
+                        city={city ? city : null}
+                        observable={observeMapClick}
+                    />
+                    <SearchArea>
+                        <button 
+                            onClick={e => handleCreateNewPin()}
+                        >
+                            Create new Pin
+                        </button>
+                        <Link to={marker ? `/search/${marker.coords.latitude}/${marker.coords.longitude}` : '#'}>
+                            <button >Search</button>
+                        </Link>
                 </SearchArea>
-            </MapArea>
+                </MapArea>
+                {console.log("flaaaa: ", cities)}
+                <ListingCities cities={cities}>
+                    <h2>Cities Nearby</h2>
+                    <ul>
+                        {
+                            cities && 
+                            cities.map(city => {
+                                return <li><Link to={`search/${city.name}`}>{city.name}</Link> (Pin it)</li>
+                            })
+                        }
+                    </ul>
+                </ListingCities>
+            
+            </Wrapper>
         </PageLayout>
     )
 };

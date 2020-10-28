@@ -16,7 +16,7 @@ export const fetchCitiesByLatLong = (latitude, longitude, initialCity=false) => 
 
     dispatch({
         type: FETCH_CITIES_BY_LAT_LNG,
-        payload: {...response.data, initialCity, coord: { lat: latitude, lon: longitude } }
+        payload: {...response.data, cities: initialCity ? [] : response.data.list, initialCity, coord: { lat: latitude, lon: longitude } }
     })
 }
 
@@ -31,10 +31,11 @@ export const fetchInitialCity = (latitude, longitude) => async dispatch => {
 
 export const fetchCityByName = (name) => async dispatch => {
     const response = await api.get(`weather?q=${name}&APPID=${key}&units=metric`);
+    const responseCities = await api.get(`/find?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&cnt=15&APPID=${key}&units=metric`);
 
     dispatch({
         type: FETCH_CITY_BY_NAME,
-        payload: response.data 
+        payload: {...response.data, cities: responseCities ? responseCities.data.list : []}
     })
 }
 

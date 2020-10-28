@@ -21,7 +21,7 @@ const WeatherReducer = (state=initialState, action) => {
             coord = action.payload.coord ? action.payload.coord : action.payload.list[0].coord ;
             return {
                 ...state, 
-                cities: action.payload.list,
+                cities: action.payload.cities,
                 city: action.payload.list ? action.payload.list[0] : {},
                 initialCity: action.payload.initialCity && action.payload.list 
                     ? action.payload.list[0] 
@@ -33,6 +33,7 @@ const WeatherReducer = (state=initialState, action) => {
             return {
                 ...state, 
                 city: action.payload,
+                cities: action.payload.cities,
                 marker: { coords: { latitude: coord.lat, longitude: coord.lon }},
                 position: { coords: { latitude: coord.lat, longitude: coord.lon }}
             }

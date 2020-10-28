@@ -26,6 +26,15 @@ const MapWrapper = (props) => {
 
     }
 
+    const showCities = (cities) => {
+        if(cities) {
+            return(
+                <ul>
+                    <li>Minhas cidades</li>
+                </ul>
+            )
+        }
+    }
 
     const handleClick = event => {
         props.observable(event.latlng);

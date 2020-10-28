@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import Home from 'pages/home';
 import SearchResults from 'pages/search';
+import SearchCity from 'pages/searchCity';
 
 const GlobalStyle = createGlobalStyle`
     body{
@@ -39,6 +40,7 @@ const App = () => {
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route exact path="/search/:latitude/:longitude" component={SearchResults} />
+                    <Route exact path="/search/:cityName" component={SearchCity} />
                 </Switch>
             </BrowserRouter>
         </>
