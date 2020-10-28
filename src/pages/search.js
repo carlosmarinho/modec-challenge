@@ -106,7 +106,7 @@ const renderCities = (cities) => {
             {
                 cities.map(city => {
                     return (
-                        <City>
+                        <City key={city.id}>
                             <h3>{city.name}</h3>
                             <ImgBox>
                                 <img src={`http://openweathermap.org/img/wn/${city.weather[0].icon}@4x.png`} alt="Icone tempo"/>
