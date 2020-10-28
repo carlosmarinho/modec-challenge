@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Map from 'components/Map';
-import api from 'api/';
 import PageLayout from 'components/PageLayout';
 import { SearchBar } from 'components/SearchBar';
 import { 
@@ -26,7 +25,6 @@ const MapArea = styled.div`
         height: 480px;
     }
 `
-const key = 'e331364a57997b3e26f001eef954114a';
 
 const SearchArea = styled.div`
     display: flex;
@@ -37,11 +35,6 @@ const SearchArea = styled.div`
     button{
         margin: 1px 10px 1px 0;
     }
-`
-
-const ListingCities = styled.div`
-    width: 50%;
-    background-color: red;
 `
 
 const Home = () => {
@@ -61,7 +54,6 @@ const Home = () => {
     useEffect(async() => {
         navigator.geolocation.getCurrentPosition(
             async (pos) => {
-                console.log("setou a posição", pos)
                 const { latitude, longitude } = pos.coords;                
                 dispatch(fetchCitiesByLatLong(latitude, longitude, true))
             },
@@ -79,17 +71,7 @@ const Home = () => {
 
     const searchByCity = async(searchValue) => {
         dispatch(fetchCityByName(searchValue))
-        // dispatch(fetchCity(searchValue))
-        // const weather = await api.get(`weather?q=${searchValue}&APPID=${key}&units=metric`)
-        // console.log("weatter no search: ", weather)
-        // if(weather.data){
-            // setMarker({coords: {latitude: weather.data.coord.lat, longitude: weather.data.coord.lon}})
-            // setMyCities([weather.data])
-            // setPosition({coords: {latitude: weather.data.coord.lat, longitude: weather.data.coord.lon}});
-        // }
     }
-
-
     
     return (
         <PageLayout city={initialCity}>
@@ -113,14 +95,6 @@ const Home = () => {
                         <button >Search</button>
                     </Link>
                 </SearchArea>
-                {/* <ListingCities>
-                    {
-                        myCities && 
-                        myCities.map(city => {
-                            return <li>{city.name}</li>
-                        })
-                    }
-                </ListingCities> */}
             </MapArea>
         </PageLayout>
     )
